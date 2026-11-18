@@ -812,7 +812,13 @@ const RelationModalWithContext = ({
           })}
           onLoadMore={handleLoadMore}
           textValue={textValue}
-          onChange={handleChange}
+          onChange={(relationId?: string) => {
+            handleChange(relationId);
+            if (relationId) {
+              // Once a relation is picked, the next search must start from scratch.
+              setSearchParams((s) => ({ ...s, _q: '', page: 1 }));
+            }
+          }}
           onTextValueChange={(text) => {
             setTextValue(text);
           }}
